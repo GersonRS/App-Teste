@@ -1,0 +1,214 @@
+@mixin textGlitch($name, $intensity, $textColor, $background, $highlightColor1, $highlightColor2, $width, $height) {
+    color: $textColor;
+    position: relative;
+    $steps: $intensity;
+
+    // Ensure the @keyframes are generated at the root level
+    @at-root {
+        // We need two different ones
+        @for $i from 1 through 2 {
+            @keyframes #{$name}-anim-#{$i} {
+                @for $i from 0 through $steps {
+                    $top: random(100);
+                    $bottom: random(101 - $top);
+                    #{percentage($i*(1/$steps))} {
+                        clip-path: inset(#{($top/100) * 100%} 0 #{($bottom/100) * 100%} 0);
+                    }
+                }
+            }
+        }
+    }
+    &::before,
+    &::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: $background;
+    }
+    &::after {
+        left: 2px;
+        text-shadow: -1px 0 $highlightColor1;
+        animation: #{$name}-anim-1 2s infinite linear alternate-reverse;
+    }
+    &::before {
+        left: -2px;
+        text-shadow: 2px 0 $highlightColor2;
+        animation: #{$name}-anim-2 3s infinite linear alternate-reverse;
+    }
+}
+
+@mixin imgGlitch($name, $intensity, $width, $height, $top, $left) {
+    $steps: $intensity;
+
+    // Ensure the @keyframes are generated at the root level
+    @at-root {
+        // We need two different ones
+        @for $i from 1 through 2 {
+            @keyframes #{$name}-anim-#{$i} {
+                @for $i from 0 through $steps {
+                    $top: random(100);
+                    $bottom: random(101 - $top);
+                    #{percentage($i*(1/$steps))} {
+                        clip-path: inset($top% 0 $bottom% 0);
+                    }
+                }
+            }
+        }
+    }
+
+    > img {
+        position: absolute;
+        top: $top + px;
+        left: $left + px;
+    }
+    > img:nth-child(2),
+    > img:nth-child(3) {
+    }
+    > img:nth-child(2) {
+        left: ($left + 2) + px;
+        animation: #{$name}-anim-1 2s infinite linear alternate-reverse;
+    }
+    > img:nth-child(3) {
+        left: ($left - 2) + px;
+        animation: #{$name}-anim-2 3s infinite linear alternate-reverse;
+    }
+}
+
+@mixin svgGlitch(
+    $name,
+    $intensity,
+    $fillColor,
+    $background,
+    $fillHighlight1,
+    $fillHighlight2,
+    $width,
+    $height,
+    $top,
+    $left
+) {
+    $steps: $intensity;
+
+    // Ensure the @keyframes are generated at the root level
+    @at-root {
+        // We need two different ones
+        @for $i from 1 through 2 {
+            @keyframes #{$name}-anim-#{$i} {
+                @for $i from 0 through $steps {
+                    $top: random(100);
+                    $bottom: random(101 - $top);
+                    #{percentage($i*(1/$steps))} {
+                        clip-path: inset($top% 0 $bottom% 0);
+                    }
+                }
+            }
+        }
+    }
+
+    svg {
+        position: absolute;
+        top: $top + px;
+        left: $left + px;
+        fill: $fillColor;
+        background: $background;
+        width: $width + px;
+        height: $height + px;
+    }
+    svg:nth-child(2),
+    svg:nth-child(3) {
+    }
+    svg:nth-child(2) {
+        fill: $fillHighlight1;
+        left: ($left - 2) + px;
+        animation: #{$name}-anim-1 2s infinite linear alternate-reverse;
+    }
+    svg:nth-child(3) {
+        fill: $fillHighlight2;
+        left: ($left + 2) + px;
+        animation: #{$name}-anim-2 3s infinite linear alternate-reverse;
+    }
+}
+
+/* 
+  MIXIN(S)
+  =================
+ https://codepen.io/chriscoyier/pen/XWrNyZy?editors=0110
+
+
+  (TEXT) PARAMS
+  =================
+  1. Namespace
+  2. Intensity
+  3. Text color
+  4. Background color (flat)
+  5. Highlight #1 color
+  6. Highlight #2 color
+  7. Width (px)
+  8. Height (px)
+*/
+
+.logo-glitch {
+    width: 90%;
+    margin: auto;
+}
+
+// Usage
+.example-one {
+    width: 100%;
+    margin: auto;
+    font-size: calc(50% + 14vw);
+    @include textGlitch("example-one", 5, black, white, red, blue, 20, 10);
+}
+.example-two {
+    width: 50%;
+    margin: auto;
+    font-size: calc(50% + 9vw);
+    @include textGlitch("example-two", 10, black, white, red, blue, 714, 50);
+}
+
+/* 
+    (IMAGE) PARAMS
+    =================
+    @mixin imgGlitch($name, $intensity, $width, $height, $top, $left)
+    =================
+    1. Namespace
+    2. Intensity
+    3. Width (px)
+    4. Height (px)
+    5. Top (px, abs pos)
+    6. Left (px, abs pos)
+  */
+
+// .example-three {
+//     @include imgGlitch("example-three", 15, 100, 100, 200, 75);
+// }
+
+/* 
+    (SVG) PARAMS
+    =================
+    @mixin svgGlitch($name, $intensity, $fillColor, $background, $width, $height, $top, $left)
+    =================
+    1. Namespace
+    2. Intensity
+    3. Fill Color
+    4. Background
+    5. Width (px)
+    6. Height (px)
+    5. Top (px, abs pos)
+    6. Left (px, abs pos)
+  */
+// .example-four {
+//     @include svgGlitch("example-four", 30, white, black, red, red, 100, 100, 200, 175);
+// }
+
+ion-content ion-toolbar {
+    --background: translucent;
+}
+
+.truncate {
+    width: 99%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,20 @@
+ion-content ion-toolbar {
+  --background: translucent;
+}
+
+ion-toolbar {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  --background: transparent;
+  --color: black;
+}
+
+ion-toolbar ion-button,
+ion-toolbar ion-back-button,
+ion-toolbar ion-menu-button {
+  --color: black;
+}

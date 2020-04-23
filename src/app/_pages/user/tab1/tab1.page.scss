@@ -1,0 +1,33 @@
+ion-content ion-toolbar {
+  --background: translucent;
+}
+
+.restaurant {
+  background: rgb(78, 204, 163);
+}
+
+.lunch {
+  background: rgb(254, 241, 128);
+}
+
+.marketplace {
+  background: rgb(202, 130, 254);
+}
+
+.drungstore {
+  background: rgb(44, 124, 236);
+}
+
+ion-card {
+  div {
+      height: 25vh;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      svg {
+          width: 90%;
+          height: 300px;
+      }
+  }
+}

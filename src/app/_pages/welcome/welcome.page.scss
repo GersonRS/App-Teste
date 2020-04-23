@@ -1,0 +1,38 @@
+ion-slides {
+    height: 100%;
+}
+ion-slide {
+    flex-direction: column;
+    text-align: justify;
+    div {
+        width: 70%;
+    }
+}
+
+ion-img {
+    max-width: 50vw;
+    max-height: 50vh;
+    overflow: hidden;
+}
+
+p {
+    padding: 1em;
+}
+
+.step-one {
+    background: var(--ion-color-primary);
+    color: var(--ion-color-primary-contrast);
+}
+.step-two {
+    background: var(--ion-color-success);
+    color: var(--ion-color-success-contrast);
+}
+.step-three {
+    background: var(--ion-color-dark);
+    color: var(--ion-color-dark-contrast);
+}
+.step-for {
+    background: var(--ion-color-light);
+    color: var(--ion-color-light-contrast);
+}
+
